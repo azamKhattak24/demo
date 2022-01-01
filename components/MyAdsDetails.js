@@ -52,7 +52,7 @@ const MyAdDetails = ({route,navigation}) => {
         </Text>
         <Card.Divider />
         <View style= {styles.rowview}>
-        <Text style={styles.txt1}>Price</Text>
+        <Text style={styles.txt1}>Price:</Text>
         <Text style= {styles.txt1}>{route.params.Price}</Text>
         </View>
         <View style= {styles.rowview}>
@@ -99,7 +99,7 @@ const MyAdDetails = ({route,navigation}) => {
             }}
             style={styles.buttonImageIconStyle}
           />
-      +
+      
         <Text style={styles.btntxt}>Delete</Text>
       </TouchableOpacity>
       </View> 

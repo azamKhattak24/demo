@@ -29,6 +29,7 @@ const getData = async () => {
 
     var arr = [];
    var keyValues = Object.keys(data);
+   
 
     for (let i = 0; i < keyValues.length; i++) {
       let key = keyValues[i];
@@ -59,7 +60,7 @@ const getData = async () => {
   
   
  return (
-    <View style = {{flex:1, alignSelf: 'center'}}>
+    <View style = {styles.container}>
       <FlatList style={styles.showList}
       refreshing={false}
       onRefresh={getData}
@@ -67,6 +68,7 @@ const getData = async () => {
       numColumns={2}
       renderItem={({item,index})=>
       <TouchableOpacity 
+      style={styles.touch}
       onPress={()=>
         navigation.navigate("MyAdsDetails", item)
         }>
@@ -74,11 +76,11 @@ const getData = async () => {
               <Card.Image
                 style={{ marginBottom:10, resizeMode:'contain', overflow:'hidden'}}
                  source={require('../assets/pixel4.jpg')}
-                  resizeMode="cover"
+                  resizeMode="contain"
               />
               <Card.Divider />
               <Text style={styles.cardTitle}>{item.Brand}</Text>
-              <Text style={styles.priceText}>{item.Price}</Text>
+              <Text style={styles.cardText}>{item.Price}</Text>
               <Card.Divider />
               
             </Card>
@@ -92,38 +94,39 @@ const getData = async () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    
-    
-  },
-   button: {
-    borderRadius: 10,
-    marginBottom: '5%',
-    
-
-    width: '100%',
-    height: '15%',
-    padding:10
+  container : {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor:'black',
+    },
+   
+  showList:{
+    flex:1,
+    width:"90%",
   },
   box: {
-    flex:1,
+    padding:0,
     backgroundColor:'lightgray',
-    width:"90%"
-    
+    width:"100%",
   },
- search: {
-      alignContent:'center',
-      borderColor:'black',
-      borderWidth:1,
-      width: "70%",
-      borderRadius:5,
-      marginLeft:'10%',
-      marginTop: '2%',
-      marginBottom: '5%'
-    
- }
+  touch: {
+    padding:10,
+    width:"47%",
+    height:"50%"
+  },
   
+ cardTitle: {
+  padding:5,
+  alignSelf:'center',
+  fontWeight:'bold',
+  marginTop:-10
+ },
+ cardText: {
+  alignSelf:'center',
+  marginBottom:5
+ },
+
  
 });
 

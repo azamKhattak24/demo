@@ -18,7 +18,7 @@ const PostAd = ({navigation}) => {
   const [detail, setDetail] =useState();
   const [isSelected, setSelect] = useState('');
   const [number, setNumber] =useState();
-
+  
   //FIREBASE POSTING
   const postData = () => {
     var requestOptions = {
@@ -28,7 +28,9 @@ const PostAd = ({navigation}) => {
         Brand: brand,
         Model: model,
         Details: detail,
-        Contact: number,        
+        Contact: number,
+        img: image,  
+        condtion: isSelected      
 
       }),
       
@@ -39,7 +41,7 @@ const PostAd = ({navigation}) => {
       .catch((error) => console.log('error', error));
   };
 
-  var defaultimg = "https://www.gizmochina.com/wp-content/uploads/2018/02/Samsung-Galaxy-S8-Plus-G955F_2-500x500.jpg"
+  var defaultimg = "https://media.istockphoto.com/vectors/image-preview-icon-picture-placeholder-for-website-or-uiux-design-vector-id1222357475?k=20&m=1222357475&s=612x612&w=0&h=jPhUdbj_7nWHUp0dsKRf4DMGaHiC16kg_FSjRRGoZEI="
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 

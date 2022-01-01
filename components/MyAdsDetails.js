@@ -9,14 +9,21 @@ import {
 
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { Text, Card, Button, Icon, AntDesign } from 'react-native-elements';
+import { Text, Card, Button, Icon, AntDesign, Overlay} from 'react-native-elements';
 
 import { initializeApp } from "firebase/app";
 
 const FIREBASE_API_ENDPOINT = 'https://madproject-22019-default-rtdb.firebaseio.com/';
 
 const MyAdDetails = ({route,navigation}) => {
+  const [visible, setVisible] = useState(false);
+  
+    const toggleOverlay = () => {
+      setVisible(!visible);
+    };
+  
   //var id2=route.params.ID
+
    const deleteData = () => {
      
     const id = route.params.ID;
@@ -91,7 +98,7 @@ const MyAdDetails = ({route,navigation}) => {
         <Text style={styles.btntxt}>Update</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.tch2}
-      onPress ={()=>deleteData()}>
+      onPress ={()=>{deleteData();toggleOverlay()}}>
       <Image
             source={{
               uri:
@@ -102,6 +109,17 @@ const MyAdDetails = ({route,navigation}) => {
       
         <Text style={styles.btntxt}>Delete</Text>
       </TouchableOpacity>
+
+      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+        <Text style={styles.textPrimary}>Success!</Text>
+        <Text style={styles.textSecondary}>
+          Your Ad was Deleted.
+        </Text>
+        <Button
+          title="Okay"
+          onPress={toggleOverlay}
+        />
+      </Overlay>
       </View> 
        </ScrollView>
       </Card>
@@ -164,7 +182,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
 
-  } 
+  },
+
+  textPrimary: {
+    marginVertical: 20,
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  textSecondary: {
+    marginBottom: 10,
+    textAlign: 'center',
+    fontSize: 17,
+    padding:20
+  },
 });
 
 export default MyAdDetails;

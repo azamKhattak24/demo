@@ -4,7 +4,7 @@ import {
   TextInput,
   StyleSheet, TouchableOpacity,  SafeAreaView, Image, StatusBar, ScrollView,CheckBox, Picker
 } from 'react-native'
-import { Text, Card, Button, Icon } from 'react-native-elements';
+import { Text, Card, Button, Icon, Overlay} from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 
 import { initializeApp } from "firebase/app";
@@ -24,6 +24,11 @@ const UpdateAd = ({navigation,route}) => {
   const [isSelected, setSelect] = useState('');
   const [number, setNumber] =useState(route.params.c);
   const [img, setimg] = useState();
+  const [visible, setVisible] = useState(false);
+  
+    const toggleOverlay = () => {
+      setVisible(!visible);
+    };
   
 
 const [getD,setD] = useState();
@@ -137,9 +142,20 @@ const [getD,setD] = useState();
         />
         <Card.Divider />
         <TouchableOpacity style={styles.postbtn}
-        onPress ={()=>updateData()}>
+        onPress ={()=>{updateData();toggleOverlay()}}>
         <Text style={styles.imgtxt}>UPDATE</Text>
         </TouchableOpacity>
+
+        <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+        <Text style={styles.textPrimary}>Success!</Text>
+        <Text style={styles.textSecondary}>
+          Your Ad was Updated.
+        </Text>
+        <Button
+          title="Okay"
+          onPress={toggleOverlay}
+        />
+      </Overlay>
         
 
         </Card>
@@ -224,7 +240,17 @@ alignSelf: "center",
     marginBottom: 4,
     paddingLeft:5,
     fontWeight: 'bold'
-
+  },
+  textPrimary: {
+    marginVertical: 20,
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  textSecondary: {
+    marginBottom: 10,
+    textAlign: 'center',
+    fontSize: 17,
+    padding:20
   },
 });
 

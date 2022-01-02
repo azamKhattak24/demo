@@ -37,12 +37,11 @@ const [getD,setD] = useState();
     const data = await response.json();
     console.log(data);
   };
-  console.log(price,brand,model+"i is")
+  
   const updateData = () => {
 
-    const id = "-MsHNtJnNYtq6JeQ91Gz";
-    console.log('I am update')
-   // console.log(id)
+    const id =route.params.i;
+    
     var requestOptions = {
       method: 'PATCH',
       body: JSON.stringify({

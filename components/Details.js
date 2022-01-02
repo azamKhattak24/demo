@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -6,12 +6,45 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  TextInput
 
 } from 'react-native';
 
-import { Text, Card, Button, Icon, AntDesign } from 'react-native-elements';
+import { Text, Card, Button, Icon, AntDesign, Overlay } from 'react-native-elements';
+
+import { initializeApp } from "firebase/app";
+
+
+const FIREBASE_API_ENDPOINT = 'https://madproject-22019-default-rtdb.firebaseio.com/';
+
 
 const Details = ({route}) => {
+  const [report, setReport] =useState('-');
+  const [visible, setVisible] = useState(false);
+  const {myItem}=route.params;
+  console.log(myItem)
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
+
+  
+    
+    const postData = () => {
+      const id =myItem.ID;
+      var requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+         Report: report    
+  
+        }),
+        
+      };
+      fetch(`${FIREBASE_API_ENDPOINT}/AdsReported.json`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => console.log(result))
+        .catch((error) => console.log('error', error));
+    };
+
   return (
     <SafeAreaView style={styles.container}>
     
@@ -23,7 +56,7 @@ const Details = ({route}) => {
             resizeMode: 'contain',
             overflow: 'hidden',
           }}
-         source={{ uri: route.params.img }}
+         
         />
         <Text style={{ fontSize: 25, fontWeight: 'bold',  alignself: 'center', }}>
          {route.params.Name}
@@ -31,26 +64,41 @@ const Details = ({route}) => {
         <Card.Divider />
         <View style= {styles.rowview}>
         <Text style={styles.txt1}>Price: </Text>
-        <Text style= {styles.txt1}>{route.params.Price}</Text>
+        <Text style= {styles.txt1}>{myItem.Price}</Text>
         </View>
         <View style= {styles.rowview}>
         <Text style={styles.txt1}>Company:</Text>
-        <Text style= {styles.txt1}>{route.params.Brand}</Text>
+        <Text style= {styles.txt1}>{myItem.Brand}</Text>
         </View>
         <View style= {[styles.rowview, {marginBottom:'5%'}]}>
         <Text style={styles.txt1}>Model:</Text>
-        <Text style= {styles.txt1}>{route.params.Model}</Text>
+        <Text style= {styles.txt1}>{myItem.Model}</Text>
         </View> 
          <Card.Divider />
         <Text style={styles.heading2}>Description</Text>
-        <Text style={[styles.txt1, {marginBottom:'5%'}]}>{route.params.Details}</Text>
+        <Text style={[styles.txt1, {marginBottom:'5%'}]}>{myItem.Details}</Text>
         <Card.Divider />
         <Text style={styles.heading2}>Conidtion</Text>
         <Text style={[styles.txt1, {marginBottom:'5%'}]}>New</Text>
         <Card.Divider /> 
         <Text style={styles.heading2}>Mobile Number</Text>
-        <Text style={[styles.txt1, {marginBottom:'5%'}]}>{route.params.Contact}</Text> 
+        <Text style={[styles.txt1, {marginBottom:'5%'}]}>{myItem.Contact}</Text> 
         <Card.Divider /> 
+        <TouchableOpacity style={styles.reportbtn}
+        onPress ={()=>{toggleOverlay()}}>
+        <Text style={styles.imgtxt}>Report Ad</Text>
+        </TouchableOpacity>
+
+        <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+        <Text style={styles.textPrimary}>Report Ad!</Text>
+        <TextInput style={styles.textin}
+         onChangeText = {(x)=>setReport(x)}></TextInput>
+        <Button
+          title="Okay"
+          onPress={()=>{postData(); toggleOverlay()}}
+        />
+      </Overlay>
+        
        </ScrollView>
       </Card>
      
@@ -67,6 +115,20 @@ const styles = StyleSheet.create({
     fontSize:16,
     marginTop:'3%',
     
+  },
+  textPrimary: {
+    marginVertical: 20,
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  textin: {
+    borderColor: '#bf4137', 
+ borderWidth: 1,  
+ marginBottom: 15,
+ borderRadius: 14,
+ fontSize: 18,
+ fontWeight: '500'
+
   },
   heading2: {
     fontSize: 15,
@@ -112,7 +174,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
 
-  } 
+  },
+  reportbtn : {
+    alignItems: 'center', 
+    alignSelf: "center",  
+  borderRadius : 100,
+  borderWidth : 2,
+  borderColor: '#bf4137',
+  width: 100,
+  backgroundColor: "black",
+   padding:5,
+  marginTop: '5%',
+
+  },
+
 });
 
 export default Details;

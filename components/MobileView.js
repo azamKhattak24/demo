@@ -36,7 +36,8 @@ const getData = async () => {
         Price: data[key].Price,
         Model: data[key].Model,
         Details: data[key].Details,
-        Contact: data[key].Contact
+        Contact: data[key].Contact,
+        ID: key
       };
       arr.push(credential);
     }
@@ -56,7 +57,7 @@ const getData = async () => {
     <View style = {styles.container}>
       <View style={styles.srch}>
       <SearchBar
-        placeholder="Type Here..."
+        placeholder="Seacrh Mobile"
         onChangeText={setSearch}
         value={search}
       /></View>
@@ -70,7 +71,7 @@ const getData = async () => {
       <TouchableOpacity 
       style={styles.touch}
       onPress={()=>
-        navigation.navigate("Details", item)
+        navigation.navigate("Details", {myItem:item})
         }>
             <Card containerStyle={styles.box}>
               <Card.Image
@@ -79,7 +80,7 @@ const getData = async () => {
                   resizeMode="contain"
               />
               <Card.Divider />
-              <Text style={styles.cardTitle}>{item.Brand}</Text>
+              <Text style={styles.cardTitle}>{item.Model}</Text>
               <Text style={styles.cardText}>{item.Price}</Text>
               <Card.Divider />
               

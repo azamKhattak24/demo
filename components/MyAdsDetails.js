@@ -98,7 +98,7 @@ const MyAdDetails = ({route,navigation}) => {
         <Text style={styles.btntxt}>Update</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.tch2}
-      onPress ={()=>{deleteData();toggleOverlay()}}>
+      onPress ={()=>{navigation.navigate("MyAds");deleteData();toggleOverlay()}}>
       <Image
             source={{
               uri:

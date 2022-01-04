@@ -136,7 +136,7 @@ const PostAd = ({navigation}) => {
         </Text>
         <Button
           title="Okay"
-          onPress={toggleOverlay}
+          onPress ={()=>{navigation.navigate("Home");deleteData();toggleOverlay()}}
         />
       </Overlay>
 

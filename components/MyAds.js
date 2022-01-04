@@ -11,8 +11,6 @@ import {
 } from 'react-native';
 
 import { Text, Card, Button, Icon } from 'react-native-elements';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
 
 import { initializeApp } from "firebase/app";
 
@@ -79,7 +77,7 @@ const getData = async () => {
                   resizeMode="contain"
               />
               <Card.Divider />
-              <Text style={styles.cardTitle}>{item.Brand}</Text>
+              <Text style={styles.cardTitle}>{item.Model}</Text>
               <Text style={styles.cardText}>{item.Price}</Text>
               <Card.Divider />
               

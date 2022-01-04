@@ -82,6 +82,7 @@ const MyAdDetails = ({route,navigation}) => {
         <Card.Divider /> 
         <Button
           title="Offers"
+          style={{marginTop:-5}}
           onPress={()=>{navigation.navigate("Offers",{i:route.params.ID})}}
         />
       

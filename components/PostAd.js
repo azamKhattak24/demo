@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import { Text, Card, Button, Icon, Overlay } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const FIREBASE_API_ENDPOINT = 'https://madproject-22019-default-rtdb.firebaseio.com/';
@@ -27,22 +27,7 @@ const PostAd = ({navigation}) => {
       setVisible(!visible);
     };
 
-    const getid = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem('user')
-        const val=JSON.parse(jsonValue);
-        id = (val.id);
-        console.log("post ad id", id)
-       
-      } catch(e) {
-        // error reading value
-      }
-    }
   
-    React.useEffect(() => {
-      getid();
-      //console.log("post ad id", id)
-    }, []);
   
   //FIREBASE POSTING
   const postData = () => {
@@ -55,9 +40,7 @@ const PostAd = ({navigation}) => {
         Model: model,
         Details: detail,
         Contact: number,
-        img: image,  
-        condtion: isSelected,
-        ID: id      
+        condtion: isSelected,     
 
       }),
       

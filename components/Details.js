@@ -49,6 +49,7 @@ const Details = ({route}) => {
 
     const postData2 = () => {
       const id =myItem.ID;
+      console.log("in details", id, myItem.ID)
       var requestOptions = {
         method: 'POST',
         body: JSON.stringify({

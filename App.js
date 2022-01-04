@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator();
  function App ()  {
   return (
     <NavigationContainer>
-    <Stack.Navigator initialRouteName='MyAds'>
+    <Stack.Navigator initialRouteName='Home'>
     <Stack.Screen name='Home' component={Home}/>
     <Stack.Screen name='MobileAds' component={MobileAds}/>
     <Stack.Screen name='PostAD' component={PostAd}/>

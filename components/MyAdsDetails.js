@@ -80,8 +80,11 @@ const MyAdDetails = ({route,navigation}) => {
         <Text style={styles.heading2}>Mobile Number</Text>
         <Text style={[styles.txt1, {marginBottom:'5%'}]}>{route.params.Contact}</Text> 
         <Card.Divider /> 
-       
-        
+        <Button
+          title="Offers"
+          onPress={()=>{navigation.navigate("Offers",{i:route.params.ID})}}
+        />
+      
      <View style = {styles.viewbtn}>
       <TouchableOpacity 
        onPress={()=>{navigation.navigate("UpdateMyAds",{i:route.params.ID,

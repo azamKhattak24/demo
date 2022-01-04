@@ -10,6 +10,7 @@ import Detail from './components/Details.js';
 import MyAds from './components/MyAds.js';
 import MyAdsDetails from './components/MyAdsDetails';
 import UpdateAd from './components/UpdateAd';
+import Offer from './components/Offers';
 
 
 const Stack = createNativeStackNavigator();
@@ -18,7 +19,7 @@ const Tab = createBottomTabNavigator();
  function App ()  {
   return (
     <NavigationContainer>
-    <Stack.Navigator initialRouteName='MobileAds'>
+    <Stack.Navigator initialRouteName='MyAds'>
     <Stack.Screen name='Home' component={Home}/>
     <Stack.Screen name='MobileAds' component={MobileAds}/>
     <Stack.Screen name='PostAD' component={PostAd}/>
@@ -26,6 +27,7 @@ const Tab = createBottomTabNavigator();
     <Stack.Screen name='MyAds' component={MyAds}/>
     <Stack.Screen name='MyAdsDetails' component={MyAdsDetails}/>
     <Stack.Screen name='UpdateMyAds' component={UpdateAd}/>
+    <Stack.Screen name='Offers' component={Offer}/>
     
     </Stack.Navigator>
     </NavigationContainer>

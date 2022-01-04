@@ -25,12 +25,10 @@ const Details = ({route}) => {
   
   
   const toggleOverlay = () => {
-    console.log('Report')
     setVisible(!visible);
   };
 
   const toggleOverlay2 = () => {
-    console.log('Offers')
     setVisible2(!visible2);
   };
     const postData = () => {
@@ -54,8 +52,8 @@ const Details = ({route}) => {
       var requestOptions = {
         method: 'POST',
         body: JSON.stringify({
-         Offer: offer    
-  
+         Offer: offer,   
+        AdID: myItem.ID
         }),
         
       };
@@ -119,7 +117,9 @@ const Details = ({route}) => {
         <Overlay isVisible={visible2} onBackdropPress={toggleOverlay2}>
         <Text style={styles.textPrimary}>Offers!</Text>
         <TextInput style={styles.textin}
-         onChangeText = {(x)=>setOffer(x)}></TextInput>
+        keyboardType='number-pad'
+         onChangeText = {(x)=>setOffer(x)}
+         ></TextInput>
         <Button
           title="Place Your Offer"
           onPress={()=>{postData2(); toggleOverlay2()}}

@@ -12,23 +12,27 @@ import {
 
 import { Text, Card, Button, Icon, AntDesign, Overlay } from 'react-native-elements';
 
-import { initializeApp } from "firebase/app";
-
 
 const FIREBASE_API_ENDPOINT = 'https://madproject-22019-default-rtdb.firebaseio.com/';
 
 
 const Details = ({route}) => {
-  const [report, setReport] =useState('-');
+  const [report, setReport] =useState();
+  const [offer, setOffer] =useState();
   const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
   const {myItem}=route.params;
-  console.log(myItem)
+  
+  
   const toggleOverlay = () => {
+    console.log('Report')
     setVisible(!visible);
   };
 
-  
-    
+  const toggleOverlay2 = () => {
+    console.log('Offers')
+    setVisible2(!visible2);
+  };
     const postData = () => {
       const id =myItem.ID;
       var requestOptions = {
@@ -40,6 +44,22 @@ const Details = ({route}) => {
         
       };
       fetch(`${FIREBASE_API_ENDPOINT}/AdsReported.json`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => console.log(result))
+        .catch((error) => console.log('error', error));
+    };
+
+    const postData2 = () => {
+      const id =myItem.ID;
+      var requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+         Offer: offer    
+  
+        }),
+        
+      };
+      fetch(`${FIREBASE_API_ENDPOINT}/Offers.json`, requestOptions)
         .then((response) => response.json())
         .then((result) => console.log(result))
         .catch((error) => console.log('error', error));
@@ -84,10 +104,27 @@ const Details = ({route}) => {
         <Text style={styles.heading2}>Mobile Number</Text>
         <Text style={[styles.txt1, {marginBottom:'5%'}]}>{myItem.Contact}</Text> 
         <Card.Divider /> 
+        <View style={styles.rowview}>
         <TouchableOpacity style={styles.reportbtn}
         onPress ={()=>{toggleOverlay()}}>
         <Text style={styles.imgtxt}>Report Ad</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.offertbtn}
+        onPress ={()=>{toggleOverlay2()}}>
+        <Text style={styles.imgtxt}>Offer</Text>
+        </TouchableOpacity>
+        </View>
+
+        <Overlay isVisible={visible2} onBackdropPress={toggleOverlay2}>
+        <Text style={styles.textPrimary}>Offers!</Text>
+        <TextInput style={styles.textin}
+         onChangeText = {(x)=>setOffer(x)}></TextInput>
+        <Button
+          title="Place Your Offer"
+          onPress={()=>{postData2(); toggleOverlay2()}}
+        />
+      </Overlay>
 
         <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
         <Text style={styles.textPrimary}>Report Ad!</Text>
@@ -122,7 +159,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   textin: {
-    borderColor: '#bf4137', 
+  borderColor: '#bf4137', 
  borderWidth: 1,  
  marginBottom: 15,
  borderRadius: 14,
@@ -135,54 +172,31 @@ const styles = StyleSheet.create({
      fontWeight: 'bold',  
      textDecorationLine: 'underline' 
   },
-   tch2 : {
-    alignItems: 'center', 
-    alignSelf: "center",  
-  borderRadius : 100,
-  borderWidth : 2,
-  width: 107,
-  backgroundColor: "black",
-   padding:5,
-    flexDirection: 'row',
-     height: 40,
-      margin: 2,
-  },
-  btntxt: {
-    fontSize:13,
-    fontWeight: "bold",
-    color:"white"
-  }, 
- 
-  buttonImageIconStyle: {
-    margin: 5,
-    height: 25,
-    width: 20,
-    resizeMode: 'contain',
-  }, 
-  viewbtn:{
-        flexDirection: "row",
-        //position:'relative',
-        bottom:0,
-        //width: "110%",
-        //marginLeft:-12,
-        marginTop:'20%',
-        justifyContent: 'center'
-
-
-  },
+   
   rowview: {
     flexDirection: 'row',
     justifyContent: 'space-between'
 
   },
   reportbtn : {
-    alignItems: 'center', 
-    alignSelf: "center",  
+  alignItems: 'center', 
+  alignSelf: "center",  
   borderRadius : 100,
   borderWidth : 2,
   borderColor: '#bf4137',
   width: 100,
   backgroundColor: "black",
+   padding:5,
+  marginTop: '5%',
+
+  },
+
+  offertbtn : {
+    alignItems: 'center', 
+    alignSelf: "center",  
+  borderRadius : 100,
+  width: 100,
+  backgroundColor: "green",
    padding:5,
   marginTop: '5%',
 

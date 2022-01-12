@@ -51,7 +51,7 @@ const getData = async () => {
 
   const searching = () => {
     return products.filter((element) => {
-      return element.Brand.toUpperCase().includes(search.toUpperCase());
+      return element.Model.toUpperCase().includes(search.toUpperCase());
     });
   };
  return (

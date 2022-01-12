@@ -5,13 +5,15 @@ import { Text, Card, Button, Icon } from 'react-native-elements';
 
 
 
-const FIREBASE_API_ENDPOINT = 'https://madproject-22019-default-rtdb.firebaseio.com/';
-const Offer = ({navigation,route}) => {
+const FIREBASE_API_ENDPOINT = 'https://moblail-default-rtdb.firebaseio.com/';
+const OfferScreen = ({navigation,route}) => {
+    const [Offer, setOffer] = React.useState();
+
 
     const deleteData = (i) => {
      
         const id = i;
-        console.log("in offer", id)
+        console.log("in offer delete", id)
         var requestOptions = {
           method: 'DELETE',
         };
@@ -23,7 +25,6 @@ const Offer = ({navigation,route}) => {
       };
       
 
-  const [Offer, setOffer] = React.useState();
 
   const getData = async () => {
     const response = await fetch(`${FIREBASE_API_ENDPOINT}/Offers.json`);
@@ -36,14 +37,19 @@ const Offer = ({navigation,route}) => {
       let key = keyValues[i];
       let credential = {
         Offers: data[key].Offer,
-        Adid: data[key].AdID,
-        id: key
+        Adid: data[key].AdID,  
+        userid: data[key].id,
+        image: data[key].Image,
+        name: data[key].Username,
+        id: key, 
       
       };
       arr.push(credential);
     }
-   console.log(arr)
-    setOffer(arr)
+   console.log("in offer",arr)
+    setOffer(arr.filter(element => {
+        return element.Adid == route.params.i;
+      }))
   };
     
   React.useEffect(() => {
@@ -53,7 +59,7 @@ const Offer = ({navigation,route}) => {
   return (
         <View style={styles.container}>
       <Card>
-      <Card.Title>Offers</Card.Title>
+      <Card.Title>Offers On Your Ad</Card.Title>
             <Card.Divider />
       <FlatList
       refreshing={false}
@@ -69,9 +75,10 @@ const Offer = ({navigation,route}) => {
         <Image
           style={styles.image}
           resizeMode="cover"
-          source={require('../assets/pixel4.jpg')}
+          source={{uri: item.image}}
         />
-        <Text style={styles.name}>{item.Offers}</Text>
+        <Text style={styles.name}>{item.name}</Text>
+        <Text style={[styles.name, {marginLeft:'35%'}]}>Rs {item.Offers}</Text>
         </TouchableOpacity>
          <TouchableOpacity  onPress = {() => {deleteData(item.id)}}>
         <Icon name='delete' />
@@ -100,6 +107,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     marginTop: 5,
+    fontWeight:'bold'
   },
 
   heading: {
@@ -143,4 +151,4 @@ const styles = StyleSheet.create({
  
 });
 
-export  default Offer;
+export  default OfferScreen;

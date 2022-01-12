@@ -80,10 +80,15 @@ const MyAdDetails = ({route,navigation}) => {
         <Text style={styles.heading2}>Mobile Number</Text>
         <Text style={[styles.txt1, {marginBottom:'5%'}]}>{route.params.Contact}</Text> 
         <Card.Divider /> 
+
+
+
         <Button
           title="Offers"
           style={{marginTop:-5}}
-          onPress={()=>{navigation.navigate("Offers",{i:route.params.ID})}}
+          onPress={()=>{navigation.navigate("Offers",{i:route.params.ID,
+            p:route.params.Price,b:route.params.Brand,d:route.params.Details,
+            c:route.params.Contact,m:route.params.Model})}}
         />
       
      <View style = {styles.viewbtn}>
@@ -101,6 +106,8 @@ const MyAdDetails = ({route,navigation}) => {
           />
         <Text style={styles.btntxt}>Update</Text>
       </TouchableOpacity>
+
+      //Delete Button
       <TouchableOpacity style={styles.tch2}
       onPress ={()=>{navigation.navigate("MyAds");deleteData();toggleOverlay()}}>
       <Image

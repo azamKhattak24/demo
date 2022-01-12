@@ -14,35 +14,35 @@ const Home =({navigation})=> {
 
       <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate("MobileAds")}}>
          <View style={styles.touchView}>
-     <Text style ={{fontWeight:'bold', marginRight:'5%'}}>Mobiles</Text>
+     <Text style ={{fontWeight:'bold', marginRight:'5%', fontSize:20}}>Mobiles</Text>
     <Icon name='mobile' size={24}/>
    </View>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate("MyAds")}}>
          <View style={styles.touchView}>
-     <Text style ={{fontWeight:'bold', marginRight:'5%'}}>My Ads</Text>
+     <Text style ={{fontWeight:'bold', marginRight:'5%',fontSize:20}}>My Ads</Text>
     <Icon name='table' size={24}/>
    </View>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate("Ad")}}>
          <View style={styles.touchView}>
-     <Text style ={{fontWeight:'bold', marginRight:'5%'}}>Favourite</Text>
+     <Text style ={{fontWeight:'bold', marginRight:'5%', fontSize:20}}>Favourite</Text>
     <Icon name='heart' size={24} color='red'/>
    </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate("PostAD")}}>
+        <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate("PostAd")}}>
          <View style={styles.touchView}>
-     <Text style ={{fontWeight:'bold', marginRight:'5%'}}>Post An Ad</Text>
+     <Text style ={{fontWeight:'bold', marginRight:'5%',fontSize:20}}>Post An Ad</Text>
     <Icon name='clipboard' size={24}/>
    </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate("PostAD")}}>
+        <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate("Profile")}}>
          <View style={styles.touchView}>
-     <Text style ={{fontWeight:'bold', marginRight:'5%'}}>Profile</Text>
+     <Text style ={{fontWeight:'bold', marginRight:'5%',fontSize:20}}>Profile</Text>
     <Icon name='user-circle' size={24}/>
    </View>
         </TouchableOpacity>

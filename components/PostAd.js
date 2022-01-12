@@ -6,10 +6,11 @@ import {
 } from 'react-native'
 import { Text, Card, Button, Icon, Overlay } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
+import { initializeApp } from "firebase/app";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-
-const FIREBASE_API_ENDPOINT = 'https://madproject-22019-default-rtdb.firebaseio.com/';
+const FIREBASE_API_ENDPOINT = 'https://moblail-default-rtdb.firebaseio.com/';
 
 var id;
 const PostAd = ({navigation}) => {
@@ -27,7 +28,22 @@ const PostAd = ({navigation}) => {
       setVisible(!visible);
     };
 
+    const getid = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('user')
+        const val=JSON.parse(jsonValue);
+        id = (val.id);
+        console.log("post ad id", id)
+       
+      } catch(e) {
+        // error reading value
+      }
+    }
   
+    React.useEffect(() => {
+      getid();
+      //console.log("post ad id", id)
+    }, []);
   
   //FIREBASE POSTING
   const postData = () => {
@@ -39,13 +55,14 @@ const PostAd = ({navigation}) => {
         Brand: brand,
         Model: model,
         Details: detail,
-        Contact: number,
-        condtion: isSelected,     
+        Contact: number, 
+        condtion: isSelected,
+        ID: id      
 
       }),
       
     };
-    fetch(`${FIREBASE_API_ENDPOINT}/Ads.json`, requestOptions)
+    fetch(`${FIREBASE_API_ENDPOINT}/ads.json`, requestOptions)
       .then((response) => response.json())
       .then((result) => console.log(result))
       .catch((error) => console.log('error', error));
@@ -139,7 +156,7 @@ const PostAd = ({navigation}) => {
         <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
         <Text style={styles.textPrimary}>Success!</Text>
         <Text style={styles.textSecondary}>
-          Your Ad was Posted
+          Posted Successfully.
         </Text>
         <Button
           title="Okay"

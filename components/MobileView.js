@@ -11,19 +11,18 @@ import {
 } from 'react-native';
 
 import { Text, Card, Button, Icon,SearchBar } from 'react-native-elements';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { initializeApp } from "firebase/app";
 
 
-const FIREBASE_API_ENDPOINT = 'https://madproject-22019-default-rtdb.firebaseio.com/';
+const FIREBASE_API_ENDPOINT = 'https://moblail-default-rtdb.firebaseio.com/';
 
 const MobileAds = ({navigation}) => {
 const [search, setSearch] = React.useState("");
 const [products,setProducts]=React.useState([])
 const getData = async () => {
-    const response = await fetch(`${FIREBASE_API_ENDPOINT}/tasks.json`);
+    const response = await fetch(`${FIREBASE_API_ENDPOINT}/ads.json`);
     const data = await response.json();
 
     var arr = [];
@@ -32,6 +31,7 @@ const getData = async () => {
     for (let i = 0; i < keyValues.length; i++) {
       let key = keyValues[i];
       let credential = {
+        Image: data[key].Image,
         Brand: data[key].Brand,
         Price: data[key].Price,
         Model: data[key].Model,
@@ -40,6 +40,7 @@ const getData = async () => {
         ID: key
       };
       arr.push(credential);
+      console.log("in mobile view", arr)
     }
     setProducts(arr)
   };
@@ -63,6 +64,7 @@ const getData = async () => {
       /></View>
       <FlatList style={styles.showList}
       refreshing={false}
+      keyExtractor={(item) => item.key}
       onRefresh={getData}
       data={search.length>1?searching():products
        }
@@ -76,7 +78,7 @@ const getData = async () => {
             <Card containerStyle={styles.box}>
               <Card.Image
                 style={{ marginBottom:10, resizeMode:'contain', overflow:'hidden'}}
-                 source={require('../assets/pixel4.jpg')}
+                 source={{uri:item.Image}}
                   resizeMode="contain"
               />
               <Card.Divider />

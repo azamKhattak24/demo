@@ -15,7 +15,7 @@ const FIREBASE_API_ENDPOINT = 'https://madproject-22019-default-rtdb.firebaseio.
 
 
 const UpdateAd = ({navigation,route}) => {
-  console.log("Plis"+route.params.p)
+ 
   const [image, setimage] = useState();
   const [price, setPrice] =useState(route.params.p);
   const [brand, setBrand] =useState(route.params.b);
@@ -33,7 +33,7 @@ const UpdateAd = ({navigation,route}) => {
 
 const [getD,setD] = useState();
   const getData = async () => {
-    const response = await fetch(`${FIREBASE_API_ENDPOINT}/tasks.json`);
+    const response = await fetch(`${FIREBASE_API_ENDPOINT}/Ads.json`);
     const data = await response.json();
     console.log(data);
   };
@@ -53,7 +53,7 @@ const [getD,setD] = useState();
       }),
     };
 
-    fetch(`${FIREBASE_API_ENDPOINT}/tasks/${id}.json`, requestOptions)
+    fetch(`${FIREBASE_API_ENDPOINT}/Ads/${id}.json`, requestOptions)
       .then((response) => response.json())
       .then((result) => console.log(result))
       .catch((error) => console.log('error', error));

@@ -12,18 +12,38 @@ import {
 
 import { Text, Card, Button, Icon, AntDesign, Overlay } from 'react-native-elements';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const FIREBASE_API_ENDPOINT = 'https://moblail-default-rtdb.firebaseio.com/';
 
-const FIREBASE_API_ENDPOINT = 'https://madproject-22019-default-rtdb.firebaseio.com/';
-
-
+var id;
+var name;
 const Details = ({route}) => {
   const [report, setReport] =useState();
   const [offer, setOffer] =useState();
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
   const {myItem}=route.params;
+  const [img, setimag] =useState(myItem.Image);
   
-  
+  const getid = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('user')
+      const val=JSON.parse(jsonValue);
+      id = (val.id);
+      name = (val.username);
+      console.log("detailsd id", id, name)
+     
+    } catch(e) {
+      // error reading value
+    }
+  }
+
+  React.useEffect(() => {
+    getid();
+    //console.log("post ad id", id)
+  }, []);
+
+
   const toggleOverlay = () => {
     setVisible(!visible);
   };
@@ -54,7 +74,11 @@ const Details = ({route}) => {
         method: 'POST',
         body: JSON.stringify({
          Offer: offer,   
-        AdID: myItem.ID
+        AdID: myItem.ID,
+        userid: id,
+        Image: img,
+        Username: name
+
         }),
         
       };
@@ -75,10 +99,11 @@ const Details = ({route}) => {
             resizeMode: 'contain',
             overflow: 'hidden',
           }}
+          source={{ uri: myItem.Image }}
          
         />
         <Text style={{ fontSize: 25, fontWeight: 'bold',  alignself: 'center', }}>
-         {route.params.Name}
+         {myItem.Model}
         </Text>
         <Card.Divider />
         <View style= {styles.rowview}>
@@ -183,12 +208,13 @@ const styles = StyleSheet.create({
   alignItems: 'center', 
   alignSelf: "center",  
   borderRadius : 100,
-  borderWidth : 2,
-  borderColor: '#bf4137',
+  
+  
   width: 100,
   backgroundColor: "black",
    padding:5,
   marginTop: '5%',
+  backgroundColor: "red",
 
   },
 
@@ -202,6 +228,12 @@ const styles = StyleSheet.create({
   marginTop: '5%',
 
   },
+  imgtxt : {
+
+    color:'white',
+    fontWeight:'bold',
+    fontSize:14
+  }
 
 });
 
